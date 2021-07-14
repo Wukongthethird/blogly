@@ -7,8 +7,11 @@ Users
 {% block content %}
 <h1>Users</h1>
 <div class="users-list">
+{% for user in users %}
+    <li> {{user.first_name}} {{user.last_name}} </li>
+{% endfor %}
 
 </div>
-<button class="btn btn-primary"><a href="/create-user">Add User</a></button>
+<button class="btn btn-primary"><a href="/users/new">Add User</a></button>
 <!--TODO: Test button?-->
 {% endblock %}

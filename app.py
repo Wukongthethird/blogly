@@ -1,6 +1,6 @@
 """Blogly application."""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request
 from models import db, connect_db, User
 
 app = Flask(__name__)
@@ -16,23 +16,42 @@ debug = DebugToolbarExtension(app)
 
 db.create_all()
 
-
 @app.route('/')
+def redirect_homepage():
+    """Loads our homepage"""
+    return redirect( "/users")
+
+@app.route('/users')
 def load_homepage():
     """Loads our homepage"""
 
-    """TODO: need to change to redirect"""
+
+    #emp user.query.all() DOUBLE CHECK
+    users = User.query().all()
     return render_template(
-        "users.html"
+        "users.html", users = users
     )
 
-
-
-
-@app.route('/users/new')
+@app.route('/users/new', methods = ['GET','POST'])
 def load_create_user_form():
     """Loads create user page and our create user form"""
+    if Flask.request.method == 'GET':
+        return render_template("add_users.html")
 
-    return render_template(
+    elif Flask.request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        image_url = request.form['image_url']
+
+        if image_url == "":
+            image_url = None 
+
+        new_user =  User(first_name,last_name,image_url)
+        db.session.add(new_user)
+        db.session.commit()
         
-    )
+        return redirect("/users")
+    
+    
+    
+

@@ -14,20 +14,25 @@ class User(db.Model):
     """User."""
 
     __tablename__ = "users"
-
+    """Table Columns"""
     id = db.Column(db.Integer,
                    primary_key = True,
                    autoincrement = True)
     
-    first_name = db.Column(db.string(),
+    first_name = db.Column(db.TEXT,
                             nullable=False
                         )
-    last_name = db.Column(db.string(),
+    last_name = db.Column(db.TEXT,
                             nullable=False
                         )
-    image_url =  db.Column(db.string(),
+    image_url =  db.Column(db.TEXT,
+                            nullable=False,
                             default="https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/440px-SpongeBob_SquarePants_character.svg.png"
     )
+
+    # def add_to_database(user):
+    #     db.session.add(user)
+        
     
 
 
