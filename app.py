@@ -18,7 +18,7 @@ db.create_all()
 
 @app.route('/')
 def redirect_homepage():
-    """Loads our homepage"""
+    """Redirects to page that loads our homepage"""
     return redirect( "/users")
 
 @app.route('/users')
@@ -26,10 +26,11 @@ def load_homepage():
     """Loads our homepage"""
 
 
-    #emp user.query.all() DOUBLE CHECK
-    users = User.query().all()
+    #emp user.query.all() DOUBLE CHECK TODO
+    users = User.query.all()
     return render_template(
-        "users.html", users = users
+        "users.html", 
+        users = users
     )
 
 @app.route('/users/new', methods = ['GET','POST'])
@@ -52,6 +53,16 @@ def load_create_user_form():
         
         return redirect("/users")
     
+@app.route('users/<user_id>')
+def show_user_info(user_id):
+    user = User.query.get(user_id)
+
+    return render_template(
+        "user_details.html",
+        user = user
+    )
+
+@app.route('')
     
     
 

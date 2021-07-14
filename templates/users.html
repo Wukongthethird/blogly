@@ -8,7 +8,9 @@ Users
 <h1>Users</h1>
 <div class="users-list">
 {% for user in users %}
-    <li> {{user.first_name}} {{user.last_name}} </li>
+    <li><a href='/users/"{{ user.id }}"'>
+        {{ user.first_name }} {{ user.last_name }}
+    </a></li>
 {% endfor %}
 
 </div>
