@@ -1,4 +1,4 @@
-{% extends "base.html"}
+{% extends "base.html" %}
 
 {% block title %}
 Users
@@ -7,13 +7,14 @@ Users
 {% block content %}
 <h1>Users</h1>
 <div class="users-list">
-{% for user in users %}
-    <li><a href='/users/"{{ user.id }}"'>
-        {{ user.first_name }} {{ user.last_name }}
-    </a></li>
-{% endfor %}
-
+    <ul>
+        {% for user in users %}
+        <li><a href='/users/{{ user.id }}'>
+                {{ user.first_name }} {{ user.last_name }}
+            </a></li>
+        {% endfor %}
+    </ul>
 </div>
-<button class="btn btn-primary"><a href="/users/new">Add User</a></button>
+<button class="btn btn-link" id="add-user"><a href="/users/new">Add User</a></button>
 <!--TODO: Test button?-->
 {% endblock %}

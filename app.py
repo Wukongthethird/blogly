@@ -44,17 +44,20 @@ def load_create_user_form():
         last_name = request.form['last_name']
         image_url = request.form['image_url']
 
+        print('here are the variables', first_name, last_name, image_url)
+
         if image_url == "":
             image_url = None 
 
-        new_user =  User(first_name,last_name,image_url)
+        new_user =  User(first_name=first_name,last_name=last_name,image_url=image_url)
         db.session.add(new_user)
         db.session.commit()
         
         return redirect("/users")
     
-@app.route('users/<user_id>')
+@app.route('/users/<user_id>')
 def show_user_info(user_id):
+    """Loads user profile page"""
     user = User.query.get(user_id)
 
     return render_template(
@@ -62,21 +65,38 @@ def show_user_info(user_id):
         user = user
     )
 
-@app.route('users/<user_id>/edit', methods =['GET', 'POST'])
+@app.route('/users/<user_id>/edit', methods =['GET', 'POST'])
 def user_edit(user_id):
+    """Loads an edit user post form, with a cancel button that returns the user page, and a save button that edits the user page"""
+    user = User.query.get(user_id)
+
     if request.method == 'GET':
-        user = User.query.get(user_id)
-        return render_template('edit.html' , user)
+        return render_template(
+            'edit.html', 
+            user = user
+            )
 
-    elif request.method == 'POST':
-        user = User.query.get(user_id)
-
+    if request.method == 'POST':
         user.first_name =  request.form['first_name']
         user.last_name =  request.form['last_name']
         user.image_url =  request.form['image_url']
 
+        if user.image_url == "":
+            user.image_url = None 
+
         db.session.commit()
         return redirect("/users")
+
+
+@app.route('/users/<user_id>/delete', methods = ['POST'])
+def delete_user(user_id):
+    """Deletes our selected user, and redirects back to the /users page"""
+
+    user = User.query.get(user_id)
+    db.session.delete(user)
+
+    db.session.commit()
+    return redirect("/users")
 
 
     

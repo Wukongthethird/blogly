@@ -1,4 +1,4 @@
-{% extends "base.html"}
+{% extends "base.html" %}
 
 {% block title %}
 Edit a User
@@ -6,7 +6,8 @@ Edit a User
 
 {% block content %}
 
-<form action="/users" method = 'POST'>
+<!-- TODO: we took out form action and put it below on each of the buttons-->
+<form method = 'POST'>
     
     <label for="first_name">First Name</label>
     <input type="text" name="first_name" placeholder="{{user.first_name}}">
@@ -17,8 +18,8 @@ Edit a User
     <label for="image_url">Image URL</label>
     <input type="text" name="image_url"  placeholder="{{user.image_url}}">
     
-    <button class="btn btn-primary" type = "submit" formaction="/users/{{user_id}}" formmethod = 'GET'  >Cancel</button>
-    <button class="btn btn-primary" type = "submit" >SAVE</button>
+    <button class="btn btn-primary" type = "submit" formaction="/users/{{user.id}}" formmethod = 'GET'>Cancel</button>
+    <button class="btn btn-primary" type = "submit" formaction="/users">SAVE</button>
 
 </form>
     
