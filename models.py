@@ -25,14 +25,16 @@ class User(db.Model):
     last_name = db.Column(db.TEXT,
                             nullable=False
                         )
+                            
     image_url =  db.Column(db.TEXT,
                             nullable=False,
                             default="https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/440px-SpongeBob_SquarePants_character.svg.png"
     )
+    
 
-    # def add_to_database(user):
-    #     db.session.add(user)
-        
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
     
 
 

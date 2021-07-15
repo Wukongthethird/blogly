@@ -24,10 +24,8 @@ def redirect_homepage():
 @app.route('/users')
 def load_homepage():
     """Loads our homepage"""
-
-
     #emp user.query.all() DOUBLE CHECK TODO
-    users = User.query.all()
+    users = User.query.order_by( User.last_name).all()
     return render_template(
         "users.html", 
         users = users
