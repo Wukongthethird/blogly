@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
 {% block title %}
-User Profile
+{{ user.get_full_name() }}Profile
 {% endblock %}
 
 {% block content %}
 <div> 
+    <!--add alt tag-->
     <img src="{{ user.image_url }}" alt="">
 </div>
 <div>

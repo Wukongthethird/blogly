@@ -1,6 +1,7 @@
 """Models for Blogly."""
 from flask_sqlalchemy import SQLAlchemy
 
+#todo global the image url
 db = SQLAlchemy()
 
 
