@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, render_template, redirect, request
-from sample_model import db, connect_db, User
+from models import db, connect_db, User
 
 #  from test_model import db, connect_db, User
 #  app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///test_blogly'
