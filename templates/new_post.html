@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Post
+{% endblock %}
+
+{% block content %}
+<h1>Add Post for {{ user.get_full_name() }}</h1>
+<div class="add-post">
+    <form action="/users/{{ user.id }}/posts/new"  method="POST">
+        <!-- input add id = label for ::value-->
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" required>
+
+        <label for="content">Content</label>
+        <input type="text" name="content" id="content" required>
+
+        <button class="btn btn-primary" type="submit">Add Post</button>
+    </form>
+        <a href="/users/{{ user.id }}">Cancel</a>
+</div>
+<!--TODO: Test button?-->
+{% endblock %}
