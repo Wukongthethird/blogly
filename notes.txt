@@ -1,0 +1,2 @@
+run test_model in a seperate database
+test db  = test_blogly

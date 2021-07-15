@@ -1,10 +1,16 @@
 """Blogly application."""
 
 from flask import Flask, render_template, redirect, request
-from models import db, connect_db, User
+from sample_model import db, connect_db, User
+
+#  from test_model import db, connect_db, User
+#  app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///test_blogly'
+#  this will connect to test_db
+#  reference the standard model and db is how to revert
+
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///test_blogly'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
@@ -14,7 +20,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 app.config['SECRET_KEY'] = "SECRET!"
 debug = DebugToolbarExtension(app)
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def redirect_homepage():
