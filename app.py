@@ -69,6 +69,10 @@ def show_user_info(user_id):
 def user_edit(user_id):
     """Loads an edit user post form, with a cancel button that returns the user page, and a save button that edits the user page"""
     user = User.query.get(user_id)
+    og_img = user.image_url
+    og_first = user.first_name
+    og_last = user.last_name
+    
 
     if request.method == 'GET':
         return render_template(
@@ -81,14 +85,19 @@ def user_edit(user_id):
         user.last_name =  request.form['last_name']
         user.image_url =  request.form['image_url']
 
+        #change to require on html
         if user.image_url == "":
-            user.image_url = None 
+            user.image_url = og_img
+        if user.first_name == "":
+            user.first_name = og_first
+        if user.last_name == "":
+            user.last_name = og_last
 
         db.session.commit()
         return redirect("/users")
 
 
-@app.route('/users/<user_id>/delete', methods = ['POST'])
+@app.route('/users/<int:user_id>/delete', methods = ['POST'])
 def delete_user(user_id):
     """Deletes our selected user, and redirects back to the /users page"""
 

@@ -9,11 +9,20 @@ User Profile
     <img src="{{ user.image_url }}" alt="">
 </div>
 <div>
+    
     <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+
     <div>
+        <form>
         <button><a href='/users/{{ user.id }}/edit'>Edit</a></button>       
-        <!--delte may not need a link or to remove-->
-        <button><a href='/users/{{ user.id }}/delete'>Delete</a></button>
+        <!-- delte may not need a link or to remove -->
+        <button formaction="/users/{{ user.id }}/delete"
+            formmethod="POST">Delete</button>
+        </form>
     </div>
+
+
+   
+
 </div>
 {% endblock %}
