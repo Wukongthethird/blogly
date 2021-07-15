@@ -36,10 +36,10 @@ def load_homepage():
 @app.route('/users/new', methods = ['GET','POST'])
 def load_create_user_form():
     """Loads create user page and our create user form"""
-    if Flask.request.method == 'GET':
+    if request.method == 'GET':
         return render_template("add_users.html")
 
-    elif Flask.request.method == 'POST':
+    elif request.method == 'POST':
         first_name = request.form['first_name']
         last_name = request.form['last_name']
         image_url = request.form['image_url']
@@ -62,7 +62,23 @@ def show_user_info(user_id):
         user = user
     )
 
-@app.route('')
+@app.route('users/<user_id>/edit', methods =['GET', 'POST'])
+def user_edit(user_id):
+    if request.method == 'GET':
+        user = User.query.get(user_id)
+        return render_template('edit.html' , user)
+
+    elif request.method == 'POST':
+        user = User.query.get(user_id)
+
+        user.first_name =  request.form['first_name']
+        user.last_name =  request.form['last_name']
+        user.image_url =  request.form['image_url']
+
+        db.session.commit()
+        return redirect("/users")
+
+
     
     
 
