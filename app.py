@@ -146,6 +146,54 @@ def add_post(user_id):
         db.session.commit()
         return redirect(f"/users/{user.id}")
 
+@app.route('/posts/<post_id>') 
+def display_post(post_id):
+    
+    post = Post.query.get(post_id)
+    
+
+    return render_template(
+        'display_posts.html',
+        post=post,
+        user=post.user
+        )
+
+@app.route('/posts/<post_id>/edit', methods = ['GET',"POST"]) 
+def edit_post(post_id):
+    
+    post = Post.query.get(post_id)
+    
+    if request.method == 'GET':
+        return render_template(
+            'edit_post.html',
+            post=post,
+            user=post.user
+            )
+
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+
+        post.title = title
+        post.content = content
+
+        db.session.commit()
+        return redirect(f"/posts/{post.id}")
+
+@app.route('/posts/<int:post_id>/delete', methods = ['POST'])
+def delete_post(post_id):
+    """Deletes our selected user, and redirects back to the /users page"""
+
+    post = Post.query.get_or_404(post_id)
+    user_id = post.user.id
+    print('HELLO I AM HERE' , post)
+
+    db.session.delete(post)
+
+    db.session.commit()
+    return redirect(f"/users/{user_id}")
+
+
 
 
 

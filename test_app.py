@@ -1,7 +1,7 @@
 from unittest import TestCase
 from app import app
-from models import User, db 
-from sample_model import initial_information, user_one
+from models import User, Post, db 
+from sample_model import initial_information, user_one, post_one
 
 
 app.config['TESTING'] = True
@@ -24,16 +24,20 @@ class SampleAppTestCase(TestCase):
         """Stuff to do before every test."""
 
         User.query.delete()
+        Post.query.delete()
         self.client = app.test_client()
         # test_users = initial_information()
 
         test_user1 = User(**user_one)
-
-        db.session.add_all( [test_user1] )
+        test_post = Post(**post_one)
+     
+        db.session.add_all( [ test_user1, test_post ] )
+        
         db.session.commit()
 
         # self.user_id = User.query.get(1).id
         self.test_user1 = test_user1
+        self.test_post1 = test_post
 
 
     def tearDown(self):
@@ -96,3 +100,14 @@ class SampleAppTestCase(TestCase):
             response = client.get('/users/1000',
                                     follow_redirects=True)
             self.assertEqual(response.status_code, 404)
+
+    def test_edit_post(self):
+        with self.client as client:
+            d = {'title': 'test_title_changed', 'content': 'test has changed content'}
+
+            response = client.post(f'/post/{self.test_post1.id}/edit', 
+                                    data=d,follow_redirects=True)
+            html = response.get_data(as_text=True)
+
+            self.assertEqual(response.status_code, 200)
+            self.assertIn(f" {d['title']} {d['content']}", html)

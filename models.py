@@ -35,7 +35,7 @@ class User(db.Model):
     )
 
     user_posts = db.relationship('Post',
-                                backref='users')
+                                backref='user', lazy='joined')
     
 
     def get_full_name(self):
