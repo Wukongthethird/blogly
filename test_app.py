@@ -23,15 +23,21 @@ class SampleAppTestCase(TestCase):
     def setUp(self):
         """Stuff to do before every test."""
 
-        User.query.delete()
         Post.query.delete()
+        User.query.delete()
+        
         self.client = app.test_client()
         # test_users = initial_information()
 
         test_user1 = User(**user_one)
-        test_post = Post(**post_one)
+
+        db.session.add( test_user1 )
+        
+        db.session.commit()
+        
+        test_post = Post(user_id=test_user1.id , **post_one)
      
-        db.session.add_all( [ test_user1, test_post ] )
+        db.session.add_all( [ test_post ] )
         
         db.session.commit()
 
@@ -105,9 +111,8 @@ class SampleAppTestCase(TestCase):
         with self.client as client:
             d = {'title': 'test_title_changed', 'content': 'test has changed content'}
 
-            response = client.post(f'/post/{self.test_post1.id}/edit', 
+            response = client.post(f'/posts/{self.test_post1.id}/edit', 
                                     data=d,follow_redirects=True)
-            html = response.get_data(as_text=True)
 
             self.assertEqual(response.status_code, 200)
-            self.assertIn(f" {d['title']} {d['content']}", html)
+        

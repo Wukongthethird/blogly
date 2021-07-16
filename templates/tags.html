@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Tags
+{% endblock %}
+
+{% block content %}
+<!-- users template testing purposes -->
+<h1>TAGS</h1>
+<div class="tags-list">
+    <ul>
+        {% for tag in tags %}
+        <li><a href='/tags/{{tag.id}}'>
+                {{tag.name}}
+            </a></li>
+        {% endfor %}
+    </ul>
+</div>
+<button class="btn btn-link" id="add-tag"><a href="/tags/new">Add Tag</a></button>
+<!--TODO: Test button?-->
+{% endblock %}

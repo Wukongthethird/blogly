@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+{{tag.name}}
+
+{% endblock %}
+
+{% block content %}
+<h1>          {{tag.name}}</h1>
+
+<p> BY {{ tag.name}}</p>
+
+<div class="post">
+    <form action="/tags/{{ tag.id }}/delete"  method="POST">
+        <button class="btn btn-primary" type="submit">DeleTE</button>
+    </form>
+
+        <a href="/tags/{{ tag.id }}/edit">edit</a>
+
+        <a href="/tags">Cancel</a>
+</div>
+<!--TODO: Test button?-->
+{% endblock %}

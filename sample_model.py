@@ -2,7 +2,7 @@ from models import User, db
 from app import app
 
 user_one = { 'first_name':"user_one_first_name" , 'last_name':'last_name_test_sub' }
-post_one = {'title':'this was not fun', 'content':'this has changed', 'user_id':1}
+post_one = {'title':'this was not fun', 'content':'this has changed' }
  
 def initial_information():
 

@@ -37,7 +37,7 @@ class User(db.Model):
     user_posts = db.relationship('Post',
                                 backref='user', lazy='joined')
     
-
+    @property
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -62,5 +62,41 @@ class Post(db.Model):
                             default=datetime.datetime.utcnow)
 
     user_id = db.Column(db.ForeignKey('users.id'),
-                            nullable=False)                                                
+                            nullable=False)    
+
+
+
+                            
+
+class PostTag(db.Model):
+    """Tag on a post."""
+
+    __tablename__ = "posts_tags"
+
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'), primary_key=True)
+    
+
+
+
+
+class Tag(db.Model):
+    """Tag that can be added to posts."""
+
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True)
+    
+    name = db.Column(db.Text, nullable=False, unique=True)
+
+    posts = db.relationship(
+        'Post',
+        secondary="posts_tags",
+        # cascade="all,delete",
+        backref="tags",
+    )
+
+    
+
+
 
